@@ -60,17 +60,15 @@
   .security-field .seal-a{transform-origin:82% 23%;animation:seal-spin 34s linear infinite}
   .security-field .seal-b{transform-origin:7% 72%;animation:seal-spin-reverse 42s linear infinite}
   .security-field .orbit{transform-origin:50% 50%;animation:orbit-drift 16s ease-in-out infinite alternate}
-  .security-field .grid-lines{animation:grid-drift 18s ease-in-out infinite alternate}
   .security-field .trace{stroke-dasharray:10 18;animation:trace-flow 9s linear infinite}
+  .security-field .scroll-layer{transform-box:view-box;transform-origin:center;will-change:transform,opacity}
+  .security-field .weave{opacity:0}
+  .security-field .medallion{opacity:0}
   @keyframes seal-spin{to{transform:rotate(360deg)}}
   @keyframes seal-spin-reverse{to{transform:rotate(-360deg)}}
   @keyframes orbit-drift{
     0%{transform:translate3d(-18px,-10px,0) rotate(-2deg)}
     100%{transform:translate3d(28px,24px,0) rotate(4deg)}
-  }
-  @keyframes grid-drift{
-    0%{transform:translate3d(-24px,0,0)}
-    100%{transform:translate3d(34px,16px,0)}
   }
   @keyframes trace-flow{to{stroke-dashoffset:-112}}
   .veil{position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -467,7 +465,6 @@
     .ccard{scroll-snap-align:start}
   }
   @media(max-width:560px){
-    .security-field .grid-lines{display:none}
     .security-field .fine{stroke-width:.8}
     .security-field .faint{opacity:.08}
     .security-field .medium{opacity:.15}
@@ -492,7 +489,6 @@
     .security-field .seal-a{animation:seal-spin 68s linear infinite!important}
     .security-field .seal-b{animation:seal-spin-reverse 84s linear infinite!important}
     .security-field .orbit{animation:orbit-drift 32s ease-in-out infinite alternate!important}
-    .security-field .grid-lines{animation:grid-drift 36s ease-in-out infinite alternate!important}
     .security-field .trace{animation:trace-flow 18s linear infinite!important}
     .reveal{opacity:1!important;transform:none!important}
     .hero h1 .ln span{transform:none!important}
@@ -507,43 +503,58 @@
 <div class="security-field" aria-hidden="true">
   <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
     <defs>
-      <pattern id="microGrid" width="70" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(24)">
-        <path d="M0 0H70M0 35H70M0 70H70M0 0V70M35 0V70M70 0V70" class="fine"/>
-      </pattern>
       <g id="petal">
         <path d="M0 0C42-104 126-104 168 0C126 104 42 104 0 0Z" class="fine"/>
         <path d="M18 0C50-72 112-72 150 0C112 72 50 72 18 0Z" class="fine"/>
       </g>
     </defs>
-    <g class="grid-lines faint">
-      <rect x="820" y="-250" width="760" height="700" fill="url(#microGrid)"/>
-      <path d="M780 40L1450 540M720 125L1390 625M660 210L1330 710" class="fine"/>
-    </g>
-    <g class="seal-a medium">
-      <g transform="translate(1180 205)">
-        <circle r="210" class="fine"/>
-        <circle r="180" class="fine trace"/>
-        <circle r="112" class="fine"/>
-        <use href="#petal" transform="rotate(0) scale(.72)"/>
-        <use href="#petal" transform="rotate(45) scale(.72)"/>
-        <use href="#petal" transform="rotate(90) scale(.72)"/>
-        <use href="#petal" transform="rotate(135) scale(.72)"/>
+    <g class="scroll-layer scroll-seal-a">
+      <g class="seal-a medium">
+        <g transform="translate(1180 205)">
+          <circle r="210" class="fine"/>
+          <circle r="180" class="fine trace"/>
+          <circle r="112" class="fine"/>
+          <use href="#petal" transform="rotate(0) scale(.72)"/>
+          <use href="#petal" transform="rotate(45) scale(.72)"/>
+          <use href="#petal" transform="rotate(90) scale(.72)"/>
+          <use href="#petal" transform="rotate(135) scale(.72)"/>
+        </g>
       </g>
     </g>
-    <g class="seal-b faint">
-      <g transform="translate(70 650)">
-        <circle r="250" class="fine"/>
-        <circle r="205" class="fine trace"/>
-        <use href="#petal" transform="rotate(15) scale(.9)"/>
-        <use href="#petal" transform="rotate(75) scale(.9)"/>
-        <use href="#petal" transform="rotate(135) scale(.9)"/>
+    <g class="scroll-layer scroll-seal-b">
+      <g class="seal-b faint">
+        <g transform="translate(70 650)">
+          <circle r="250" class="fine"/>
+          <circle r="205" class="fine trace"/>
+          <use href="#petal" transform="rotate(15) scale(.9)"/>
+          <use href="#petal" transform="rotate(75) scale(.9)"/>
+          <use href="#petal" transform="rotate(135) scale(.9)"/>
+        </g>
       </g>
     </g>
-    <g class="orbit bright">
-      <path d="M460 120C690 10 910 35 1070 170S1280 480 1095 610S650 730 420 590" class="fine"/>
-      <path d="M430 155C680 70 890 85 1020 210S1160 470 1000 565S650 650 455 555" class="fine trace"/>
-      <circle cx="1068" cy="170" r="6" fill="#e8ca8d"/>
-      <circle cx="421" cy="590" r="4" fill="#e8ca8d"/>
+    <g class="scroll-layer scroll-orbit">
+      <g class="orbit bright">
+        <path d="M460 120C690 10 910 35 1070 170S1280 480 1095 610S650 730 420 590" class="fine"/>
+        <path d="M430 155C680 70 890 85 1020 210S1160 470 1000 565S650 650 455 555" class="fine trace"/>
+        <circle cx="1068" cy="170" r="6" fill="#e8ca8d"/>
+        <circle cx="421" cy="590" r="4" fill="#e8ca8d"/>
+      </g>
+    </g>
+    <g class="scroll-layer weave">
+      <path d="M-80 190C180 20 380 370 650 190S1120 20 1510 210" class="fine trace"/>
+      <path d="M-100 330C170 510 410 120 720 330S1180 510 1540 300" class="fine"/>
+      <path d="M-80 470C210 280 430 650 760 455S1210 300 1510 480" class="fine trace"/>
+      <path d="M-40 610C250 790 500 410 810 620S1240 770 1500 590" class="fine"/>
+    </g>
+    <g class="scroll-layer medallion">
+      <g transform="translate(720 450)">
+        <circle r="290" class="fine"/>
+        <circle r="245" class="fine trace"/>
+        <circle r="155" class="fine"/>
+        <use href="#petal" transform="rotate(0) scale(1.05) translate(-84 0)"/>
+        <use href="#petal" transform="rotate(60) scale(1.05) translate(-84 0)"/>
+        <use href="#petal" transform="rotate(120) scale(1.05) translate(-84 0)"/>
+      </g>
     </g>
   </svg>
 </div>
@@ -852,6 +863,55 @@ addEventListener('load',()=>setTimeout(()=>{
     if(document.hidden)cancelAnimationFrame(raf);
     else{cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);}
   });
+})();
+
+/* ---- scroll-driven background morph ---- */
+(function(){
+  const field=document.querySelector('.security-field');
+  if(!field)return;
+  const layers={
+    sealA:field.querySelector('.scroll-seal-a'),
+    sealB:field.querySelector('.scroll-seal-b'),
+    orbit:field.querySelector('.scroll-orbit'),
+    weave:field.querySelector('.weave'),
+    medallion:field.querySelector('.medallion')
+  };
+  let target=0,current=0,raf=0;
+  const clamp=n=>Math.max(0,Math.min(1,n));
+  const mix=(a,b,t)=>a+(b-a)*t;
+  const band=(p,start,peak,end)=>{
+    if(p<=start||p>=end)return 0;
+    return p<peak?(p-start)/(peak-start):(end-p)/(end-peak);
+  };
+  function setLayer(el,x,y,scale,rotate,opacity){
+    el.style.transform=`translate3d(${x}px,${y}px,0) scale(${scale}) rotate(${rotate}deg)`;
+    el.style.opacity=opacity;
+  }
+  function draw(p){
+    const first=clamp(p/.34);
+    const middle=clamp((p-.24)/.42);
+    const final=clamp((p-.68)/.32);
+    const weave=band(p,.22,.58,.9);
+    setLayer(layers.orbit,mix(0,-90,first),mix(0,75,middle),mix(1,.7,middle),mix(0,-16,middle),mix(1,.12,final));
+    setLayer(layers.sealA,mix(0,-420,middle),mix(0,245,middle),mix(1,1.3,middle),mix(0,18,middle),mix(1,.28,final));
+    setLayer(layers.sealB,mix(0,390,middle),mix(0,-225,middle),mix(1,1.22,middle),mix(0,-14,middle),mix(.7,.2,final));
+    setLayer(layers.weave,mix(90,-70,middle),mix(80,-35,middle),mix(.86,1.08,middle),mix(-7,5,middle),weave*.28);
+    setLayer(layers.medallion,0,mix(170,0,final),mix(.52,1.05,final),mix(-28,0,final),final*.23);
+    field.style.filter=`hue-rotate(${mix(0,-8,middle)}deg) brightness(${mix(1,1.12,weave)})`;
+  }
+  function frame(){
+    current+= (target-current)*.065;
+    if(Math.abs(target-current)<.0001)current=target;
+    draw(current);
+    raf=current===target?0:requestAnimationFrame(frame);
+  }
+  function update(){
+    target=clamp(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight));
+    if(!raf)raf=requestAnimationFrame(frame);
+  }
+  addEventListener('scroll',update,{passive:true});
+  addEventListener('resize',update,{passive:true});
+  update();
 })();
 
 /* ---- custom cursor ---- */

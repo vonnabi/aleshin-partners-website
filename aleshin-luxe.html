@@ -489,7 +489,11 @@
   /* reduced motion */
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-    .security-field *{animation:none!important}
+    .security-field .seal-a{animation:seal-spin 68s linear infinite!important}
+    .security-field .seal-b{animation:seal-spin-reverse 84s linear infinite!important}
+    .security-field .orbit{animation:orbit-drift 32s ease-in-out infinite alternate!important}
+    .security-field .grid-lines{animation:grid-drift 36s ease-in-out infinite alternate!important}
+    .security-field .trace{animation:trace-flow 18s linear infinite!important}
     .reveal{opacity:1!important;transform:none!important}
     .hero h1 .ln span{transform:none!important}
     body{cursor:auto}

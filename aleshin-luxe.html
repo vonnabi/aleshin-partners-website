@@ -50,8 +50,30 @@
   .eyebrow{font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold2)}
 
   /* animated background canvas */
-  #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
-  .veil{position:fixed;inset:0;z-index:1;pointer-events:none;
+  #bg-canvas{position:fixed;inset:0;z-index:1;pointer-events:none}
+  .security-field{position:fixed;inset:0;z-index:1;overflow:hidden;pointer-events:none;mix-blend-mode:screen}
+  .security-field svg{width:100%;height:100%;display:block}
+  .security-field .fine{fill:none;stroke:#d8b474;stroke-width:1;vector-effect:non-scaling-stroke}
+  .security-field .faint{opacity:.11}
+  .security-field .medium{opacity:.19}
+  .security-field .bright{opacity:.3}
+  .security-field .seal-a{transform-origin:82% 23%;animation:seal-spin 34s linear infinite}
+  .security-field .seal-b{transform-origin:7% 72%;animation:seal-spin-reverse 42s linear infinite}
+  .security-field .orbit{transform-origin:50% 50%;animation:orbit-drift 16s ease-in-out infinite alternate}
+  .security-field .grid-lines{animation:grid-drift 18s ease-in-out infinite alternate}
+  .security-field .trace{stroke-dasharray:10 18;animation:trace-flow 9s linear infinite}
+  @keyframes seal-spin{to{transform:rotate(360deg)}}
+  @keyframes seal-spin-reverse{to{transform:rotate(-360deg)}}
+  @keyframes orbit-drift{
+    0%{transform:translate3d(-18px,-10px,0) rotate(-2deg)}
+    100%{transform:translate3d(28px,24px,0) rotate(4deg)}
+  }
+  @keyframes grid-drift{
+    0%{transform:translate3d(-24px,0,0)}
+    100%{transform:translate3d(34px,16px,0)}
+  }
+  @keyframes trace-flow{to{stroke-dashoffset:-112}}
+  .veil{position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
       radial-gradient(1200px 760px at 80% -10%,rgba(207,168,105,.16),transparent 62%),
       radial-gradient(900px 820px at -8% 28%,rgba(170,150,180,.10),transparent 58%),
@@ -283,7 +305,7 @@
       linear-gradient(135deg,#171619 0%,#242124 48%,#151416 100%);
   }
   .grain{opacity:.105;mix-blend-mode:soft-light}
-  #bg-canvas{opacity:.65}
+  #bg-canvas{opacity:1;mix-blend-mode:screen}
   .gold{background:linear-gradient(105deg,#f7ecd4 8%,#d9bd82 48%,#9a7440 88%);-webkit-background-clip:text;background-clip:text}
   .eyebrow{color:#d7b879;font-size:11px;font-weight:600;letter-spacing:.28em}
   .eyebrow::before{content:"";display:inline-block;width:32px;height:1px;background:currentColor;vertical-align:middle;margin-right:13px}
@@ -445,6 +467,11 @@
     .ccard{scroll-snap-align:start}
   }
   @media(max-width:560px){
+    .security-field .grid-lines{display:none}
+    .security-field .fine{stroke-width:.8}
+    .security-field .faint{opacity:.08}
+    .security-field .medium{opacity:.15}
+    .security-field .bright{opacity:.23}
     .wrap{padding:0 20px}.hero{padding-top:120px}
     .marquee{width:100%;margin-left:0;transform:none}
     .hero h1{font-size:clamp(58px,18vw,84px)}
@@ -462,6 +489,7 @@
   /* reduced motion */
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    .security-field *{animation:none!important}
     .reveal{opacity:1!important;transform:none!important}
     .hero h1 .ln span{transform:none!important}
     body{cursor:auto}
@@ -472,6 +500,49 @@
 <body>
 <!-- CDN активів: https://res2.yourwebsite.life/res/698c721514677de1b1e6b4bd/ -->
 <canvas id="bg-canvas"></canvas>
+<div class="security-field" aria-hidden="true">
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="microGrid" width="70" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(24)">
+        <path d="M0 0H70M0 35H70M0 70H70M0 0V70M35 0V70M70 0V70" class="fine"/>
+      </pattern>
+      <g id="petal">
+        <path d="M0 0C42-104 126-104 168 0C126 104 42 104 0 0Z" class="fine"/>
+        <path d="M18 0C50-72 112-72 150 0C112 72 50 72 18 0Z" class="fine"/>
+      </g>
+    </defs>
+    <g class="grid-lines faint">
+      <rect x="820" y="-250" width="760" height="700" fill="url(#microGrid)"/>
+      <path d="M780 40L1450 540M720 125L1390 625M660 210L1330 710" class="fine"/>
+    </g>
+    <g class="seal-a medium">
+      <g transform="translate(1180 205)">
+        <circle r="210" class="fine"/>
+        <circle r="180" class="fine trace"/>
+        <circle r="112" class="fine"/>
+        <use href="#petal" transform="rotate(0) scale(.72)"/>
+        <use href="#petal" transform="rotate(45) scale(.72)"/>
+        <use href="#petal" transform="rotate(90) scale(.72)"/>
+        <use href="#petal" transform="rotate(135) scale(.72)"/>
+      </g>
+    </g>
+    <g class="seal-b faint">
+      <g transform="translate(70 650)">
+        <circle r="250" class="fine"/>
+        <circle r="205" class="fine trace"/>
+        <use href="#petal" transform="rotate(15) scale(.9)"/>
+        <use href="#petal" transform="rotate(75) scale(.9)"/>
+        <use href="#petal" transform="rotate(135) scale(.9)"/>
+      </g>
+    </g>
+    <g class="orbit bright">
+      <path d="M460 120C690 10 910 35 1070 170S1280 480 1095 610S650 730 420 590" class="fine"/>
+      <path d="M430 155C680 70 890 85 1020 210S1160 470 1000 565S650 650 455 555" class="fine trace"/>
+      <circle cx="1068" cy="170" r="6" fill="#e8ca8d"/>
+      <circle cx="421" cy="590" r="4" fill="#e8ca8d"/>
+    </g>
+  </svg>
+</div>
 <div class="veil"></div>
 <div class="grain"></div>
 <div class="progress" id="progress"></div>
@@ -727,20 +798,56 @@ addEventListener('load',()=>setTimeout(()=>{
   const ht=document.getElementById('heroTitle');if(ht)ht.classList.add('in');
 },2600));
 
-/* ---- animated gold-dust background ---- */
+/* ---- animated velvet and gold background ---- */
 (function(){
-  const c=document.getElementById('bg-canvas'),x=c.getContext('2d');let w,h,parts=[];
-  function size(){w=c.width=innerWidth;h=c.height=innerHeight;}
-  size();addEventListener('resize',size);
-  const N=reduce?0:Math.min(70,Math.floor(innerWidth/22));
-  for(let i=0;i<N;i++)parts.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+.3,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,a:Math.random()*.5+.1});
-  function loop(){
-    x.clearRect(0,0,w,h);
-    for(const p of parts){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
-      x.beginPath();x.arc(p.x,p.y,p.r,0,6.28);x.fillStyle='rgba(207,168,105,'+p.a+')';x.fill();}
-    requestAnimationFrame(loop);
+  const c=document.getElementById('bg-canvas'),x=c.getContext('2d');
+  let w,h,dpr=1,raf=0,parts=[],mx=.5,my=.5,tx=.5,ty=.5;
+  const orbs=[
+    {x:.12,y:.2,r:.36,s:.00016,p:0,a:.13,c:'215,180,111'},
+    {x:.86,y:.14,r:.3,s:-.00013,p:2.1,a:.12,c:'173,137,83'},
+    {x:.72,y:.82,r:.42,s:.0001,p:4.3,a:.085,c:'195,166,122'},
+    {x:.34,y:.68,r:.28,s:-.00008,p:1.2,a:.055,c:'139,125,120'}
+  ];
+  function size(){
+    dpr=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;
+    c.width=w*dpr;c.height=h*dpr;c.style.width=w+'px';c.style.height=h+'px';
+    x.setTransform(dpr,0,0,dpr,0,0);
   }
-  if(N)loop();
+  size();addEventListener('resize',size);
+  if(!reduce)addEventListener('pointermove',e=>{tx=e.clientX/w;ty=e.clientY/h;},{passive:true});
+  const N=reduce?18:Math.min(innerWidth<600?34:64,Math.floor(innerWidth/20));
+  for(let i=0;i<N;i++)parts.push({
+    x:Math.random(),y:Math.random(),r:Math.random()*1.35+.25,
+    vx:(Math.random()-.5)*.000018,vy:-(Math.random()*.000025+.000006),
+    a:Math.random()*.24+.035,z:Math.random()*.7+.3,p:Math.random()*6.283
+  });
+  function loop(t=0){
+    x.clearRect(0,0,w,h);
+    mx+=(tx-mx)*.018;my+=(ty-my)*.018;
+    for(const o of orbs){
+      const ox=(o.x+Math.sin(t*o.s+o.p)*.07+(mx-.5)*.04)*w;
+      const oy=(o.y+Math.cos(t*o.s*.83+o.p)*.075+(my-.5)*.035)*h;
+      const radius=Math.max(w,h)*o.r;
+      const g=x.createRadialGradient(ox,oy,0,ox,oy,radius);
+      g.addColorStop(0,`rgba(${o.c},${o.a})`);
+      g.addColorStop(.38,`rgba(${o.c},${o.a*.38})`);
+      g.addColorStop(1,'rgba(23,22,25,0)');
+      x.fillStyle=g;x.fillRect(0,0,w,h);
+    }
+    for(const p of parts){
+      if(!reduce){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=1;if(p.x>1)p.x=0;if(p.y<-.02){p.y=1.02;p.x=Math.random();}}
+      const pulse=.7+Math.sin(t*.0007+p.p)*.3;
+      x.beginPath();x.arc(p.x*w+(mx-.5)*12*p.z,p.y*h+(my-.5)*8*p.z,p.r*p.z,0,6.283);
+      x.fillStyle=`rgba(235,211,164,${p.a*pulse})`;x.fill();
+    }
+    if(!reduce)raf=requestAnimationFrame(loop);
+  }
+  loop(reduce?1800:0);
+  document.addEventListener('visibilitychange',()=>{
+    if(reduce)return;
+    if(document.hidden)cancelAnimationFrame(raf);
+    else{cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);}
+  });
 })();
 
 /* ---- custom cursor ---- */

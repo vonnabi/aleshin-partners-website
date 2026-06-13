@@ -565,6 +565,13 @@
     .security-field .seal-b{animation:seal-spin-reverse 84s linear infinite!important}
     .security-field .orbit{animation:orbit-drift 32s ease-in-out infinite alternate!important}
     .security-field .trace{animation:trace-flow 18s linear infinite!important}
+    .burger::before,.burger::after{transition:top .32s var(--ease),transform .38s var(--ease),background-color .3s!important}
+    .menu{transition:transform .58s var(--ease),visibility 0s linear .58s!important}
+    body.menu-open .menu{transition-delay:0s!important}
+    .menu-main a,.menu-consult,.menu-meta{transition:opacity .4s var(--ease),transform .45s var(--ease),color .25s!important}
+    .menu-art{animation:menu-seal 42s linear infinite!important}
+    .menu-art .dash{animation:trace-flow 18s linear infinite!important}
+    .menu-meta .online::before{animation:online-pulse 2.8s ease-in-out infinite!important}
     .reveal{opacity:1!important;transform:none!important}
     .hero h1 .ln span{transform:none!important}
     body{cursor:auto}

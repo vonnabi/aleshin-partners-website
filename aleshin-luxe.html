@@ -504,8 +504,10 @@
         linear-gradient(currentColor,currentColor) 100% 0/7px 1px no-repeat,
         linear-gradient(currentColor,currentColor) 100% 0/1px 7px no-repeat,
         linear-gradient(135deg,transparent 46%,currentColor 47% 53%,transparent 54%);
+      transition:transform .35s var(--ease),color .3s,opacity .3s;
     }
     .menu-main a:active{color:#d8b474}
+    .menu-main a:active::after{color:#d8b474;opacity:1;transform:translate(3px,-3px) scale(.88)}
     body.menu-open .menu-main a{opacity:1;transform:none}
     body.menu-open .menu-main a:nth-child(1){transition-delay:.16s}
     body.menu-open .menu-main a:nth-child(2){transition-delay:.21s}
@@ -519,21 +521,45 @@
     @keyframes menu-seal{to{transform:rotate(360deg)}}
     .menu-consult{
       display:flex;position:relative;z-index:2;align-items:center;justify-content:space-between;
-      min-height:58px;padding:0 20px;color:#241d14;background:linear-gradient(110deg,#f0dfbb,#cda966 58%,#a77d42);
+      min-height:72px;padding:0 12px 0 20px;color:#241d14;background:linear-gradient(110deg,#f0dfbb,#cda966 58%,#a77d42);
       font:700 11px/1 'Manrope',sans-serif;text-transform:uppercase;letter-spacing:.12em;
       opacity:0;transform:translateY(18px);overflow:hidden;
-      transition:opacity .55s var(--ease),transform .55s var(--ease);
+      transition:opacity .55s var(--ease),transform .55s var(--ease),filter .3s;
     }
-    .menu-consult::before{content:"";position:absolute;inset:0;transform:translateX(-120%);background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);animation:menu-shine 3.8s 1.4s ease-in-out infinite}
-    .menu-consult::after{
-      content:"";position:relative;z-index:1;width:13px;height:13px;color:#241d14;
+    .menu a.menu-consult::before{content:"";position:absolute;inset:0;transform:translateX(-120%);background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent);animation:menu-shine 3.8s 1.4s ease-in-out infinite}
+    .menu a.menu-consult::after{
+      content:"";position:relative;left:auto;bottom:auto;z-index:1;display:block;flex:0 0 46px;width:46px;height:46px;color:#241d14;
+      border:1px solid rgba(36,29,20,.38);
       background:
-        linear-gradient(currentColor,currentColor) 100% 0/7px 1px no-repeat,
-        linear-gradient(currentColor,currentColor) 100% 0/1px 7px no-repeat,
-        linear-gradient(135deg,transparent 46%,currentColor 47% 53%,transparent 54%);
+        linear-gradient(currentColor,currentColor) calc(50% + 5px) calc(50% - 5px)/8px 1px no-repeat,
+        linear-gradient(currentColor,currentColor) calc(50% + 9px) calc(50% - 1px)/1px 8px no-repeat,
+        linear-gradient(135deg,transparent 48%,currentColor 49% 51%,transparent 52%) center/17px 17px no-repeat;
+      transition:transform .4s var(--ease),background-color .3s,border-color .3s;
     }
+    .menu-consult:active{filter:brightness(1.06)}
+    .menu a.menu-consult:active::after{transform:scale(.9) translate(2px,-2px);background-color:rgba(255,255,255,.18);border-color:rgba(36,29,20,.58)}
     body.menu-open .menu-consult{opacity:1;transform:none;transition-delay:.45s}
     @keyframes menu-shine{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+    @keyframes menu-arrow-touch{0%,68%,100%{transform:none}78%{transform:translate(3px,-3px)}88%{transform:none}}
+    @keyframes consult-arrow-touch{0%,65%,100%{transform:none}76%{transform:translate(3px,-3px)}88%{transform:none}}
+    @media(hover:hover){
+      .menu-main a:hover::after,.menu-main a:focus-visible::after{color:#d8b474;opacity:1;transform:translate(3px,-3px)}
+      .menu-consult:hover,.menu-consult:focus-visible{filter:brightness(1.06)}
+      .menu a.menu-consult:hover::after,.menu a.menu-consult:focus-visible::after{
+        transform:translate(3px,-3px);background-color:rgba(255,255,255,.16);border-color:rgba(36,29,20,.58);
+      }
+    }
+    @media(hover:none){
+      body.menu-open .menu-main a::after{animation:menu-arrow-touch 3.4s ease-in-out infinite}
+      body.menu-open .menu-main a:nth-child(2)::after{animation-delay:.12s}
+      body.menu-open .menu-main a:nth-child(3)::after{animation-delay:.24s}
+      body.menu-open .menu-main a:nth-child(4)::after{animation-delay:.36s}
+      body.menu-open .menu-main a:nth-child(5)::after{animation-delay:.48s}
+      body.menu-open .menu-main a:nth-child(6)::after{animation-delay:.6s}
+      body.menu-open .menu-consult::after{animation:consult-arrow-touch 2.8s 1s ease-in-out infinite}
+      body.menu-open .menu-main a:active::after,
+      body.menu-open .menu a.menu-consult:active::after{animation:none}
+    }
     .menu-meta{
       display:grid;position:relative;z-index:2;grid-template-columns:1fr auto;align-items:end;gap:16px;
       padding-top:18px;border-top:1px solid rgba(232,214,183,.16);opacity:0;transform:translateY(18px);
